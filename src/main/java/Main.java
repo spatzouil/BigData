@@ -81,6 +81,7 @@ public class Main {
         System.out.println("Différents mots utilisés : " + usageMots);
 
         //QUESTION-3
+        //Suppression des stopwords
         List<String> stopwords = sc.textFile("french-stopwords.txt").collect();
         JavaPairRDD<String, Integer> listeMots3 = listeMots2.filter(word -> !stopwords.contains(word._1));
 
@@ -110,6 +111,7 @@ public class Main {
 
 
         //QUESTION-7
+        //On construit le dataset
         StructType schema = new StructType(new StructField[]{ new StructField(
                 "items", new ArrayType(DataTypes.StringType, true), false, Metadata.empty())
         });
@@ -135,9 +137,10 @@ public class Main {
         System.out.println("Veuillez saisir top K : (default: 20)");
         topK = input.nextInt();
 
-        // Display frequent itemsets.
+        //Affiche frequent itemsets.
         model.freqItemsets().show(topK,false);
 
+        //Affiche les règles d'association générées
         model.associationRules().show(topK, false);
 
         // Synthese presentant les consequences possibles comme predictions
